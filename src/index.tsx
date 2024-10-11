@@ -1,23 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client';
+import React from "react"
+import { createRoot } from "react-dom/client"
+import { Provider } from "react-redux"
+import App from "./App"
+import ApolloProviderWrapper from "./app/ApolloClient"
+import { store } from "./app/store"
+import "./index.css"
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const container = document.getElementById("root")
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
-  cache: new InMemoryCache()
-});
+if (container) {
+  const root = createRoot(container)
 
-root.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-);
-
-reportWebVitals();
+  root.render(
+    <Provider store={store}>
+      <ApolloProviderWrapper>
+        <App />
+      </ApolloProviderWrapper>
+    </Provider>
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
+  )
+}
