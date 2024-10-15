@@ -1,31 +1,4 @@
-import React from "react";
-import {
-  useAddDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-} from "../features/apiSlice";
-
-export const DataComponent: React.FC = () => {
-  const { data, error, isLoading } = useGetDataQuery();
-  const [deleteData] = useDeleteDataMutation();
-  console.log("=>", data);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: )</p>;
-
-  return (
-    <div>
-      {data?.map((item: any) => (
-        <div key={item.id}>
-          <p>
-            {item.name} {item.surname} ---- {item.email}
-          </p>
-          <button onClick={() => deleteData({ id: item.id })}>&times;</button>
-        </div>
-      ))}
-    </div>
-  );
-};
+import { useAddDataMutation } from "../../features/apiSlice";
 
 export const AddDataComponent: React.FC = () => {
   const [addData] = useAddDataMutation();
@@ -35,12 +8,12 @@ export const AddDataComponent: React.FC = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     const name = formData.get("name") as string;
     const surname = formData.get("surname") as string;
-    const email=formData.get("email")as string;
+    const email = formData.get("email") as string;
     addData({ name, surname, email });
   };
-
   return (
     <form onSubmit={handleSubmit}>
+      <h3>Add User</h3>
       <input type="text" name="name" placeholder="Name" />
       <input type="text" name="surname" placeholder="surname" />
       <input type="text" name="email" placeholder="email" />

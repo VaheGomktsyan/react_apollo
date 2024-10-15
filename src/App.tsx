@@ -1,11 +1,15 @@
-import "./App.css"
-import { AddDataComponent, DataComponent } from "./component/DataComponent"
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import { Menu } from "./component/Menu";
+import {  router } from "./component/Router";
+import { DataComponent } from "./pages/Users";
 
 const App = () => {
-  return <div className="App">
-    <DataComponent />
-    <AddDataComponent />
-  </div>
-}
+  return (
+    <div>
+      <RouterProvider router={router}/>
+    </div>
+  );
+};
 
-export default App
+export default App;
